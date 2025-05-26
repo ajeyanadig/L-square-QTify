@@ -1,57 +1,49 @@
-// import styles from "./Card.module.css";
-// function Card() {
-//   return <div className={styles.card}></div>;
-// }
+import React from "react";
+import { Tooltip } from "@mui/material";
+import styles from "./card.module.css";
+import { useNavigate } from "react-router-dom";
 
-// export default Card;
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import CardActionArea from "@mui/material/CardActionArea";
-import randomImage from "../../assets/random.jpg";
-import { Chip } from "@mui/material";
-
-const obj = {
-  image: randomImage,
-  chipText: "100 follows",
-  title: "new english songs",
-  numFollowers: 100,
-};
-export default function CardComponent({ imgSource, numFollowers, title }) {
-  return (
-    <>
-      <Card
-        sx={{
-          maxWidth: 159,
-          borderRadius: "10px",
-          margin: "10px",
-          backgroundColor: "#121212",
-        }}
+const Card = ({ data, type }) => {
+  let navigate = useNavigate();
+  const getCard = () => {
+    const commonContent = (
+      <div
+        className={styles.cardImg}
+        onClick={() =>
+          type !== "songs" &&
+          navigate(`/album/${data.slug}`, { state: { album: data } })
+        }
       >
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            height="200"
-            image={obj.image}
-            alt="green iguana"
-          />
-          <CardContent sx={{ backgroundColor: "white", height: "30px" }}>
-            <Chip
-              label={`${obj.numFollowers} followers`}
-              size="small"
-              sx={{
-                backgroundColor: "#121212",
-                color: "white",
-                marginLeft: -1,
-                marginTop: -2,
-              }}
-            />
-          </CardContent>
-        </CardActionArea>
-      </Card>
-      <p style={{ paddingLeft: "1rem" }}>New English</p>
-    </>
-  );
-}
+        <img src={data.image} alt={type === "album" ? "album" : data.title} />
+        <p>
+          {((type === "album" ? data.follows : data.likes) / 1000).toFixed(1)}
+          {data.follows > 999999 || data.likes > 999999 ? "m" : "k"}{" "}
+          {type === "album" ? "Follows" : "Likes"}
+        </p>
+      </div>
+    );
+
+    return (
+      <Tooltip
+        title={
+          type === "album"
+            ? `${data.songs.length} songs`
+            : `Label : ${data.genre.label}`
+        }
+        placement="top"
+        arrow
+      >
+        <div className={styles.card}>
+          {commonContent}
+          <div>
+            <h3>{data.title}</h3>
+          </div>
+        </div>
+      </Tooltip>
+    );
+  };
+
+  return type === "album" || type === "songs" ? getCard() : null;
+};
+
+export default Card;

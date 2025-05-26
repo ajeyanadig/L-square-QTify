@@ -1,19 +1,18 @@
-import { BrowserRouter } from "react-router-dom";
+import "./App.css";
+import AlbumSongsPage from "./components/Album Songs Page/AlbumSongsPage";
+import HomePage from "./components/Home Page/HomePage";
+import { Route, Routes } from "react-router-dom";
 
-import Navbar from "./components/Nabvar/Navbar";
-import Hero from "./components/Hero/Hero";
-import Section from "./components/Section/Section";
-
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Navbar />
-        <Hero />
-        <Section />
-      </BrowserRouter>
-    </div>
+    <>
+      <Routes>
+        {" "}
+        <Route path="/" Component={HomePage} />{" "}
+        <Route path="/album/:title" Component={AlbumSongsPage} />{" "}
+      </Routes>{" "}
+    </>
   );
-}
+};
 
 export default App;
