@@ -1,54 +1,32 @@
 .sectionWrapper {
-  width: 100%;
-  margin-top: 35px;
-}
-
-.showAll {
-  color: var(--primary-color);
-  cursor: pointer;
+	width: 100%;
+	margin-bottom: 25px;
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 30px 20px 0 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
 }
 
-.header p {
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.cardsWrapper {
-  margin: 20px;
+.cardWrapper {
+	margin-top: 10px;
 }
 
 .wrapper {
-  display: flex;
-  gap: 25px;
-  flex-wrap: wrap;
+	display: flex;
+	gap: 25px;
+	flex-wrap: wrap;
 }
 
 .toggleText {
-  margin-right: 10px;
-  cursor: pointer;
-  color: var(--color-primary);
+	margin-right: 10px;
+	cursor: pointer;
+	color: var(--color-primary);
 }
 
-.genreTab {
-  color: var(--color-white) !important;
-}
-
-.genreTab.Mui-selected {
-  color: #34c94b !important;
-}
-
-@media (min-width: 800px) {
-  .cardsWrapper {
-    margin: 20px 40px 40px 40px;
-  }
-  .header {
-    margin: 0 20px;
-  }
+@media only screen and (max-width: 576px) {
+	.wrapper {
+		gap: 5px;
+	}
 }

@@ -1,18 +1,20 @@
-import "./App.css";
-import AlbumSongsPage from "./components/Album Songs Page/AlbumSongsPage";
-import HomePage from "./components/Home Page/HomePage";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
+import LandingPage from "./pages/LandingPage/LandingPage";
+import AlbumDetails from "./pages/AlbumDetails/AlbumDetails";
 
-const App = () => {
-  return (
-    <>
-      <Routes>
-        {" "}
-        <Route path="/" Component={HomePage} />{" "}
-        <Route path="/album/:title" Component={AlbumSongsPage} />{" "}
-      </Routes>{" "}
-    </>
-  );
-};
+function App() {
+	return (
+		<div className="App">
+			<Routes>
+				<Route path="/" element={<LandingPage />} />
+
+				<Route path="/album/:slug" element={<AlbumDetails />} />
+
+				<Route path="*" element={<LandingPage />} />
+			</Routes>
+		</div>
+	);
+}
 
 export default App;

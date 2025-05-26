@@ -1,49 +1,58 @@
 import React from "react";
-import { Tooltip } from "@mui/material";
-import styles from "./card.module.css";
+import { Tooltip, Chip } from "@mui/material";
+import styles from "./Card.module.css";
 import { useNavigate } from "react-router-dom";
 
 const Card = ({ data, type }) => {
-  let navigate = useNavigate();
-  const getCard = () => {
-    const commonContent = (
-      <div
-        className={styles.cardImg}
-        onClick={() =>
-          type !== "songs" &&
-          navigate(`/album/${data.slug}`, { state: { album: data } })
-        }
-      >
-        <img src={data.image} alt={type === "album" ? "album" : data.title} />
-        <p>
-          {((type === "album" ? data.follows : data.likes) / 1000).toFixed(1)}
-          {data.follows > 999999 || data.likes > 999999 ? "m" : "k"}{" "}
-          {type === "album" ? "Follows" : "Likes"}
-        </p>
-      </div>
-    );
+	const navigate = useNavigate();
 
-    return (
-      <Tooltip
-        title={
-          type === "album"
-            ? `${data.songs.length} songs`
-            : `Label : ${data.genre.label}`
-        }
-        placement="top"
-        arrow
-      >
-        <div className={styles.card}>
-          {commonContent}
-          <div>
-            <h3>{data.title}</h3>
-          </div>
-        </div>
-      </Tooltip>
-    );
-  };
+	const getCard = (type) => {
+		switch (type) {
+			case "album":
+				return (
+					<Tooltip title={`${data.songs.length} songs`} placement="top" arrow>
+						<div
+							className={styles.wrapper}
+							onClick={() => navigate(`/album/${data?.slug}`)}>
+							<div className={styles.card}>
+								<img src={data.image} alt="album" />
+								<div className={styles.banner}>
+									<Chip
+										label={`${data.follows} Follows`}
+										className={styles.chip}
+										size="small"
+									/>
+								</div>
+							</div>
+							<div className={styles.titleWrapper}>
+								<p>{data.title}</p>
+							</div>
+						</div>
+					</Tooltip>
+				);
 
-  return type === "album" || type === "songs" ? getCard() : null;
+			case "songs":
+				return (
+					<div className={styles.wrapper}>
+						<div className={styles.card}>
+							<img src={data.image} alt="song" loading="lazy" />
+							<div className={styles.banner}>
+								<div id={styles.pill}>
+									<p>{data.likes} Likes</p>
+								</div>
+							</div>
+						</div>
+						<div className={styles.titleWrapper}>
+							<p>{data.title}</p>
+						</div>
+					</div>
+				);
+			default:
+				return <></>;
+		}
+	};
+
+	return getCard(type);
 };
 
 export default Card;
